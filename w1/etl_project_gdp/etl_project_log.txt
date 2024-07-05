@@ -928,3 +928,149 @@ ETL Project Log
 2024-07-04 17:16:02 - Querying top 5 countries by GDP in each region.
 2024-07-04 17:16:02 - The result of query was printed on console.
 2024-07-04 17:16:02 - The database connection was closed
+2024-07-05 17:02:15 - empty GDP value - Cuba
+2024-07-05 17:02:15 - empty GDP value - North Korea
+2024-07-05 17:02:15 - empty GDP value - New Caledonia
+2024-07-05 17:02:15 - empty GDP value - Syria
+2024-07-05 17:02:15 - empty GDP value - Monaco
+2024-07-05 17:02:15 - empty GDP value - Liechtenstein
+2024-07-05 17:02:15 - empty GDP value - Bermuda
+2024-07-05 17:02:15 - empty GDP value - Cayman Islands
+2024-07-05 17:02:15 - empty GDP value - French Polynesia
+2024-07-05 17:02:15 - empty GDP value - Greenland
+2024-07-05 17:02:15 - empty GDP value - Curaçao
+2024-07-05 17:02:15 - empty GDP value - Eritrea
+2024-07-05 17:02:15 - empty GDP value - Zanzibar
+2024-07-05 17:02:15 - empty GDP value - Sint Maarten
+2024-07-05 17:02:15 - empty GDP value - British Virgin Islands
+2024-07-05 17:02:15 - empty GDP value - Turks and Caicos Islands
+2024-07-05 17:02:15 - empty GDP value - Anguilla
+2024-07-05 17:02:15 - empty GDP value - Cook Islands
+2024-07-05 17:02:15 - empty GDP value - Montserrat
+2024-07-05 17:30:09 - empty GDP value - Cuba
+2024-07-05 17:30:09 - empty GDP value - North Korea
+2024-07-05 17:30:09 - empty GDP value - New Caledonia
+2024-07-05 17:30:09 - empty GDP value - Syria
+2024-07-05 17:30:09 - empty GDP value - Monaco
+2024-07-05 17:30:09 - empty GDP value - Liechtenstein
+2024-07-05 17:30:09 - empty GDP value - Bermuda
+2024-07-05 17:30:09 - empty GDP value - Cayman Islands
+2024-07-05 17:30:09 - empty GDP value - French Polynesia
+2024-07-05 17:30:09 - empty GDP value - Greenland
+2024-07-05 17:30:09 - empty GDP value - Curaçao
+2024-07-05 17:30:09 - empty GDP value - Eritrea
+2024-07-05 17:30:09 - empty GDP value - Zanzibar
+2024-07-05 17:30:09 - empty GDP value - Sint Maarten
+2024-07-05 17:30:09 - empty GDP value - British Virgin Islands
+2024-07-05 17:30:09 - empty GDP value - Turks and Caicos Islands
+2024-07-05 17:30:09 - empty GDP value - Anguilla
+2024-07-05 17:30:09 - empty GDP value - Cook Islands
+2024-07-05 17:30:09 - empty GDP value - Montserrat
+2024-07-05 17:31:48 - empty GDP value - Cuba
+2024-07-05 17:31:48 - empty GDP value - North Korea
+2024-07-05 17:31:48 - empty GDP value - New Caledonia
+2024-07-05 17:31:48 - empty GDP value - Syria
+2024-07-05 17:31:48 - empty GDP value - Monaco
+2024-07-05 17:31:48 - empty GDP value - Liechtenstein
+2024-07-05 17:31:48 - empty GDP value - Bermuda
+2024-07-05 17:31:48 - empty GDP value - Cayman Islands
+2024-07-05 17:31:48 - empty GDP value - French Polynesia
+2024-07-05 17:31:48 - empty GDP value - Greenland
+2024-07-05 17:31:48 - empty GDP value - Curaçao
+2024-07-05 17:31:48 - empty GDP value - Eritrea
+2024-07-05 17:31:48 - empty GDP value - Zanzibar
+2024-07-05 17:31:48 - empty GDP value - Sint Maarten
+2024-07-05 17:31:48 - empty GDP value - British Virgin Islands
+2024-07-05 17:31:48 - empty GDP value - Turks and Caicos Islands
+2024-07-05 17:31:48 - empty GDP value - Anguilla
+2024-07-05 17:31:48 - empty GDP value - Cook Islands
+2024-07-05 17:31:48 - empty GDP value - Montserrat
+2024-07-05 18:12:01 - E start !
+2024-07-05 18:12:02 - E finished !
+2024-07-05 18:12:02 - T start !
+2024-07-05 18:12:02 - T finished !
+2024-07-05 18:12:02 - L start !
+2024-07-05 18:12:02 - L finished !
+2024-07-05 18:52:00 - E start !
+2024-07-05 18:52:01 - E finished !
+2024-07-05 18:52:01 - T start !
+2024-07-05 18:52:01 - T finished !
+2024-07-05 18:52:01 - L start !
+2024-07-05 18:52:22 - E start !
+2024-07-05 18:52:23 - E finished !
+2024-07-05 18:52:23 - T start !
+2024-07-05 18:52:23 - T finished !
+2024-07-05 18:52:23 - L start !
+2024-07-05 18:52:23 - L finished !
+2024-07-05 18:52:41 - E start !
+2024-07-05 18:52:42 - E finished !
+2024-07-05 18:52:42 - T start !
+2024-07-05 18:52:42 - T finished !
+2024-07-05 18:52:42 - L start !
+2024-07-05 18:52:42 - L finished !
+2024-07-05 18:52:42 - Querying top 5 countries by GDP in each region.
+2024-07-05 18:54:35 - E start !
+2024-07-05 18:54:36 - E finished !
+2024-07-05 18:54:36 - T start !
+2024-07-05 18:54:36 - T finished !
+2024-07-05 18:54:36 - L start !
+2024-07-05 18:54:36 - L finished !
+2024-07-05 18:54:36 - Querying top 5 countries by GDP in each region.
+2024-07-05 18:57:00 - E start !
+2024-07-05 18:57:01 - E finished !
+2024-07-05 18:57:01 - T start !
+2024-07-05 18:57:01 - T finished !
+2024-07-05 18:57:01 - L start !
+2024-07-05 18:57:01 - L finished !
+2024-07-05 18:57:01 - Querying top 5 countries by GDP in each region.
+2024-07-05 18:58:26 - E start !
+2024-07-05 18:58:27 - E finished !
+2024-07-05 18:58:27 - T start !
+2024-07-05 18:58:27 - T finished !
+2024-07-05 18:58:27 - L start !
+2024-07-05 18:58:27 - L finished !
+2024-07-05 18:58:27 - Querying top 5 countries by GDP in each region.
+2024-07-05 18:58:55 - E start !
+2024-07-05 18:58:56 - E finished !
+2024-07-05 18:58:56 - T start !
+2024-07-05 18:58:56 - T finished !
+2024-07-05 18:58:56 - L start !
+2024-07-05 18:58:56 - L finished !
+2024-07-05 18:58:56 - Querying top 5 countries by GDP in each region.
+2024-07-05 19:03:26 - E start !
+2024-07-05 19:03:27 - E finished !
+2024-07-05 19:03:27 - T start !
+2024-07-05 19:03:27 - T finished !
+2024-07-05 19:03:27 - L start !
+2024-07-05 19:03:27 - L finished !
+2024-07-05 19:03:27 - Querying top 5 countries by GDP in each region.
+2024-07-05 19:05:03 - E start !
+2024-07-05 19:05:04 - E finished !
+2024-07-05 19:05:04 - T start !
+2024-07-05 19:05:04 - T finished !
+2024-07-05 19:05:04 - L start !
+2024-07-05 19:05:04 - L finished !
+2024-07-05 19:05:19 - E start !
+2024-07-05 19:05:20 - E finished !
+2024-07-05 19:05:20 - T start !
+2024-07-05 19:05:20 - T finished !
+2024-07-05 19:05:20 - L start !
+2024-07-05 19:05:20 - L finished !
+2024-07-05 19:05:41 - E start !
+2024-07-05 19:05:42 - E finished !
+2024-07-05 19:05:42 - T start !
+2024-07-05 19:05:42 - T finished !
+2024-07-05 19:05:42 - L start !
+2024-07-05 19:05:42 - L finished !
+2024-07-05 19:07:16 - E start !
+2024-07-05 19:07:17 - E finished !
+2024-07-05 19:07:17 - T start !
+2024-07-05 19:07:17 - T finished !
+2024-07-05 19:07:17 - L start !
+2024-07-05 19:07:17 - L finished !
+2024-07-05 19:07:24 - E start !
+2024-07-05 19:07:24 - E finished !
+2024-07-05 19:07:24 - T start !
+2024-07-05 19:07:24 - T finished !
+2024-07-05 19:07:24 - L start !
+2024-07-05 19:07:24 - L finished !
