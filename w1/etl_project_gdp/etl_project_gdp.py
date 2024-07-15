@@ -1,5 +1,6 @@
 ########## ETL PROJECT GDP
 
+# ------------ 2024.7.13 transform 모듈 수정됨 !
 
 # import field
 import requests
@@ -69,10 +70,20 @@ def extract():
 
 ### Transform
 # GDP 단위 수정 + Region 정보 merge된 df 반환
-def transform(gdp_df):
-    # billion 단위로 수정
-    gdp_df['GDP'] = (gdp_df['GDP']/1000).round(2)
-    region_df = pd.read_csv('Region.csv')
+def transform(gdp_df, region_csv_file): # region_csv 파일이 바뀔 수 있으니 arg로 던져주자 !
+
+    ###### 수정 필요 !
+    # gdp_df['GDP'] = (gdp_df['GDP']/1000).round(2)
+    # region_df = pd.read_csv('Region.csv')
+    ###### => 단위 처리가 다 안된 상태에서  데이터가 중간에 꼬이거나 오류가 발생하면 단위가 M인지 B인지 모르는 상황이 생길 수도 있다 !
+    ###### -> 새로운 컬럼을 만들고, 거기에 추가 변환 결과를 저장 !
+    ###### => region.csv는 파일이 변경되거나 경로가 바뀔 수도 있다 
+    ###### -> arg로 던져주자 !
+
+    # billion 단위 GDP 컬럼 추가
+    gdp_df['GDP_USD_BILLION'] = (gdp_df['GDP']/1000).round(2)
+    # region 정보를 담은 csv를 불러오자 !
+    region_df = pd.read_csv(region_csv_file)
     # region 정보 left outer join
     gdp_region_df = pd.merge(gdp_df, region_df, on = 'Country', how = 'left')
     
@@ -116,7 +127,7 @@ if __name__ == "__main__":
 
     ### T
     log_message("T start !")
-    gdp_region_df = transform(gdp_df)
+    gdp_region_df = transform(gdp_df, 'Region.csv')
     log_message("T finished !")
 
     ### L
@@ -130,9 +141,9 @@ if __name__ == "__main__":
     ### A(?)
     # GDP 100B 넘는 나라들
     print('----- Countries whose GDP is over 100B -----')
-    print(gdp_df[gdp_df['GDP'] >= 100])
+    print(gdp_df[gdp_df['GDP_USD_BILLION'] >= 100])
 
     # Top 5
     print('----- Top 5 Countries by continental region -----')
     top5s = gdp_region_df.groupby('Continental Region').apply(lambda x: x.nlargest(5, 'GDP')).reset_index(drop=True)
-    print(top5s[['Country','GDP','Continental Region']])
+    print(top5s[['Country','GDP_USD_BILLION','Continental Region']])

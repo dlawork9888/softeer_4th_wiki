@@ -1,4 +1,6 @@
+########## ETL PROJECT GDP WITH SQL
 
+# ------------ 2024.7.13 transform 모듈 수정됨 !
 
 # import field
 import requests
@@ -70,12 +72,20 @@ def extract():
 ### Transform
 # GDP 단위 수정 + Region 정보 merge된 df 반환
 def transform(gdp_df):
+    ###### 수정 필요 !
     # billion 단위로 수정
-    gdp_df['GDP'] = (gdp_df['GDP']/1000).round(2)
+    # gdp_df['GDP'] = (gdp_df['GDP']/1000).round(2)
     # 컬럼 이름 바꾸기
-    gdp_df = gdp_df.rename(columns={'GDP': 'GDP_USD_BILLION'})
+    # gdp_df = gdp_df.rename(columns={'GDP': 'GDP_USD_BILLION'})
+    ###### => 단위 처리가 다 안된 상태에서  데이터가 중간에 꼬이거나 오류가 발생하면 단위가 M인지 B인지 모르는 상황이 생길 수도 있다 !
+    ###### -> 새로운 컬럼을 만들고, 거기에 추가 변환 결과를 저장 !
+
+    # GDP_USD_BILLION 컬럼 추가 !
+    gdp_df['GDP_USD_BILLION'] = (gdp_df['GDP']/1000).round(2)
+    
     # sql버전에서는 그냥 단위만 수정해서 보내주자 
     # A 과정에서 쿼리로 한번에 할 것! 
+    
     return gdp_df
 
 
@@ -126,7 +136,7 @@ if __name__ == "__main__":
 
     # Load 했으니까 다시 불러와야 하나 ... ?
     # 근데 같은 코드스페이스에 이미 올라와있으니까 ... 이거 쓰자 ... ㅋㅋ!
-    # 
+
 
     ### A(?)
     # GDP 100B 넘는 나라들
