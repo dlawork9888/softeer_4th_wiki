@@ -1,33 +1,81 @@
-# Base image
 FROM ubuntu:20.04
 
-# Install necessary packages
 RUN apt-get update && apt-get install -y \
-    openjdk-8-jdk wget curl net-tools vim
+    wget curl net-tools vim openssh-server openssh-client sudo openjdk-11-jdk 
 
-# Set environment variables
-# 자바 경로 못잡길래 직접 찍어봄
-# JAVA_HOME = /usr/lib/jvm/java-8-openjdk-arm64
-# PATH 변수에 $JAVA_HOME/bin 추가
-ENV JAVA_HOME=/usr/lib/jvm/java-8-openjdk-arm64
-ENV HADOOP_VERSION=3.4.0
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64
+ENV PATH=${PATH}:${JAVA_HOME}/bin
+
+# Create a user
+RUN useradd -ms /bin/bash hadoopuser
+
+# Install SSH, sudo, and other necessary packages
+RUN apt-get update && \
+    apt-get install -y openssh-server sudo rsync && \
+    mkdir /var/run/sshd
+
+# Set root password
+RUN echo 'root:root' | chpasswd
+
+# Permit root login via SSH
+RUN sed -i 's/PermitRootLogin prohibit-password/PermitRootLogin yes/' /etc/ssh/sshd_config
+
+# Allow password authentication
+RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/sshd_config
+
+# Add hadoopuser to sudoers
+RUN echo 'hadoopuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+
+# Switch to hadoopuser and set up SSH keys
+USER hadoopuser
+RUN mkdir -p /home/hadoopuser/.ssh && \
+    ssh-keygen -t rsa -P "" -f /home/hadoopuser/.ssh/id_rsa && \
+    cat /home/hadoopuser/.ssh/id_rsa.pub >> /home/hadoopuser/.ssh/authorized_keys && \
+    chmod 600 /home/hadoopuser/.ssh/authorized_keys
+
+# Switch back to root for further setup
+USER root
+
+# Expose SSH port
+EXPOSE 22 9870 8088
+
+# Set limits
+RUN echo 'hadoopuser  -  nproc  65536' >> /etc/security/limits.conf && \
+    echo 'hadoopuser  -  nofile  65536' >> /etc/security/limits.conf && \
+    echo 'hadoopuser  -  memlock  unlimited' >> /etc/security/limits.conf && \
+    echo 'hadoopuser  -  stack  8192' >> /etc/security/limits.conf && \
+    echo 'hadoopuser  -  rtprio  0' >> /etc/security/limits.conf
+
+# Hadoop installation
+COPY hadoop-3.4.0.tar.gz /temp/
+
+RUN tar -xzvf /temp/hadoop-3.4.0.tar.gz -C /usr/local/ && \
+    mv /usr/local/hadoop-3.4.0 /usr/local/hadoop && \
+    chown -R hadoopuser:hadoopuser /usr/local/hadoop && \
+    rm /temp/hadoop-3.4.0.tar.gz
+
+# Config
+COPY config/* /usr/local/hadoop/etc/hadoop/
+RUN chown -R hadoopuser:hadoopuser /usr/local/hadoop/etc/hadoop/
+
+# Set Hadoop environment variables
 ENV HADOOP_HOME=/usr/local/hadoop
-ENV PATH=$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$JAVA_HOME/bin
+ENV HADOOP_INSTALL=/usr/local/hadoop
+ENV HADOOP_MAPRED_HOME=/usr/local/hadoop
+ENV HADOOP_COMMON_HOME=/usr/local/hadoop
+ENV HADOOP_HDFS_HOME=/usr/local/hadoop
+ENV YARN_HOME=/usr/local/hadoop
+ENV HADOOP_COMMON_LIB_NATIVE_DIR=/usr/local/hadoop/lib/native
+ENV PATH=$PATH:/usr/local/hadoop/sbin:/usr/local/hadoop/bin
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64
 
-# Download and extract Hadoop
-RUN wget https://downloads.apache.org/hadoop/common/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz -P /tmp && \
-    tar -xvzf /tmp/hadoop-$HADOOP_VERSION.tar.gz -C /usr/local && \
-    mv /usr/local/hadoop-$HADOOP_VERSION /usr/local/hadoop && \
-    rm /tmp/hadoop-$HADOOP_VERSION.tar.gz
+# Copy the start script
+COPY start-hadoop.sh /usr/local/bin/start-hadoop.sh
+RUN chmod +x /usr/local/bin/start-hadoop.sh
 
-# Configure Hadoop
-COPY config/* $HADOOP_HOME/etc/hadoop/
+# Switch to hadoopuser
+USER hadoopuser
 
-# Format namenode
-RUN $HADOOP_HOME/bin/hdfs namenode -format
+RUN echo 'export JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64' >> /usr/local/hadoop/etc/hadoop/hadoop-env.sh
 
-# Expose ports
-EXPOSE 9870 8088
-
-# Start Hadoop services
-CMD ["sh", "-c", "$HADOOP_HOME/sbin/start-dfs.sh && $HADOOP_HOME/sbin/start-yarn.sh && tail -f /dev/null"]
+CMD ["/usr/local/bin/start-hadoop.sh"]
