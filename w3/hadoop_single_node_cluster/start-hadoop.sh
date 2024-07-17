@@ -3,9 +3,13 @@
 # Start SSH service as root
 sudo service ssh start
 
-# Start Hadoop services as hadoopuser
+# Check if Namenode directory is empty
+if [ ! "$(ls -A /usr/local/hadoop/data/namenode)" ]; then
+  echo "Namenode directory is empty, formatting..."
+  hdfs namenode -format
+fi
 
-hdfs namenode -format
+# Start Hadoop services as hadoopuser
 start-dfs.sh
 start-yarn.sh
 

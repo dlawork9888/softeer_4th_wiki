@@ -1,3 +1,25 @@
+# Hadoop Single Node Cluster with Docker
+
+## Image Build + Container Execution
+### Directory 
+
+```
++ hadoop_single_node_cluster
+	- Dockerfile
+	+ config
+		- core-site.xml
+		- hdfs-site.xml
+		- mapred-site.xml
+		- yarn-site.xml
+	- hadoop-3.4.0.tar.gz
+	- start-hadoop.sh
+```
+
+- hadoop-3.4.0.tar.gz: 이미지 빌드 시간을 줄이기 위해 바이너리 파일을 미리 다운로드 받아 이미지 빌드 시에 COPY하여 사용
+
+#### Dockerfile
+
+```dockerfile
 ########## 베이스 이미지 및 기본 환경 설정
 
 # 베이스 이미지 설정: Ubuntu 20.04
@@ -77,10 +99,9 @@ ENV YARN_HOME=/usr/local/hadoop
 ENV HADOOP_COMMON_LIB_NATIVE_DIR=/usr/local/hadoop/lib/native
 ENV PATH=$PATH:/usr/local/hadoop/sbin:/usr/local/hadoop/bin
 
-# 하둡 시작 스크립트, 엔트리포인트 스크립트 복사 및 실행 권한 부여
+# 시작 스크립트 복사 및 실행 권한 부여
 COPY start-hadoop.sh /usr/local/bin/start-hadoop.sh
 RUN chmod +x /usr/local/bin/start-hadoop.sh
-
 
 # hadoopuser로 전환하여 JAVA_HOME 환경 설정 추가
 USER hadoopuser
@@ -110,4 +131,160 @@ CMD ["/usr/local/bin/start-hadoop.sh"]
 ##### 컨테이너 접속
 ## docker exec -it <컨테이너> /bin/bash
 #### bash 실행
+```
+
+#### config/
+
+##### core-site.xml
+
+```
+<configuration>
+    <property>
+        <name>fs.defaultFS</name>
+        <value>hdfs://localhost:9000</value>
+    </property>
+</configuration>
+```
+
+##### hdfs-site.xml
+
+```
+<configuration>
+    <property>
+        <name>dfs.replication</name>
+        <value>1</value>
+    </property>
+    <property>
+        <name>dfs.namenode.name.dir</name>
+        <value>file:///usr/local/hadoop/data/namenode</value>
+    </property>
+    <property>
+        <name>dfs.datanode.data.dir</name>
+        <value>file:///usr/local/hadoop/data/datanode</value>
+    </property>
+</configuration>
+```
+
+##### yarn-site.xml
+
+```xml
+<configuration>
+    <property>
+        <name>yarn.nodemanager.aux-services</name>
+        <value>mapreduce_shuffle</value>
+    </property>
+</configuration>
+```
+
+##### mapred-site.xml
+
+```xml
+<configuration>
+    <property>
+        <name>mapreduce.framework.name</name>
+        <value>yarn</value>
+    </property>
+</configuration>
+```
+
+##### start-hadoop.sh
+
+```sh
+#!/bin/bash
+
+# Start SSH service as root
+sudo service ssh start
+
+# Check if Namenode directory is empty
+if [ ! "$(ls -A /usr/local/hadoop/data/namenode)" ]; then
+  echo "Namenode directory is empty, formatting..."
+  hdfs namenode -format
+fi
+
+# Start Hadoop services as hadoopuser
+start-dfs.sh
+start-yarn.sh
+
+# Keep the container running
+tail -f /dev/null
+```
+
+### Dokcer Commands
+
+#### Docker Volume
+
+- 데이터 영속성을 보장하기 위한 Docker Volume
+
+``` shell
+# 도커 볼륨 생성
+docker volume create <볼륨>
+
+# 도커 볼륨 목록 확인
+docker volume ls
+
+# 도커 볼륨 확인
+docker volume inspect <볼륨>
+```
+
+#### Image Build
+
+```sh
+docker build -t <이미지태그> .
+```
+
+#### 볼륨 연결하여 컨테이너 실행
+
+```sh
+docker run -v <볼륨>:/usr/local/hadoop/<볼륨폴더> -d --name <컨테이너> -p 9870:9870 -p 8088:8088 <이미지>
+
+
+# -v : 볼륨 마운트
+# 해당 폴더에 볼륨 폴더를 마운트
+# 해당 폴더가 위치한 위상부터 볼륨에 저장됨
+# -p
+# 9870 : NameNode Web UI port
+# 8088 : YARN ResourceManage Web UI port
+```
+
+#### 컨테이너 접속, 실행 확인
+
+##### 컨테이너 접속
+
+```sh
+docker exec -it <컨테이너> /bin/bash
+## 해당 컨테이너에 접속하여 bash 실행
+```
+
+##### 접속 후 실행 확인 
+
+```sh
+# hadoop 설치 확인
+hadoop --version
+
+# 네임노드
+# localhost:9870
+# NameNode Web UI port 확인
+
+# YARN
+# localhost:8088
+# YARN ResourceManage UI port 확인
+```
+
+## Examples
+
+### 1.HDFS 디렉터리 생성
+
+```sh
+#  /user/hadoopuser에 temp_dir 생성
+hdfs dfs -mkdir -p /user/hadoopuser/temp_dir
+
+# 확인
+hdfs dfs -ls /user/hadoopuser
+```
+
+### 2. 파일 업로드
+
+1. 컨테이너에서 생성, hdfs에 업로드
+2. 호스트머신에서 생성, 컨테이너로 이동, hdfs에 업로드
+3. 웹 UI 이용
 
