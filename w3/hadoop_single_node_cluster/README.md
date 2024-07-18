@@ -284,7 +284,37 @@ hdfs dfs -ls /user/hadoopuser
 
 ### 2. 파일 업로드
 
-1. 컨테이너에서 생성, hdfs에 업로드
-2. 호스트머신에서 생성, 컨테이너로 이동, hdfs에 업로드
-3. 웹 UI 이용
+#### 웹UI 이용
+
+```
+1. localhost:9870 접속
+2. utilities -> Browse Directory 
+3. 디렉터리 선택 후 업로드
+```
+
+#### 컨테이너 내에서 생성, hdfs에 업로드
+
+```sh
+# 샘플 파일 생성
+echo "Hello, Hadoop!" > sample.txt
+
+# hdfs dfs -put
+hdfs dfs -put sample.txt /user/hadoopuser/temp_dir/
+
+# 확인 
+hdfs dfs -ls /user/hadoopuser/temp_dir
+```
+
+#### 호스트머신에서 생성, 컨테이너로 이동, hdfs에 업로드
+
+```sh 
+# 호스트 머신에서 샘플 파일을 컨테이너의 폴더로 이동
+docker cp sample.txt <컨테이너>:/temp
+
+# 컨테이너 내부에서 파일을 hdfs dfs -put
+hdfs dfs -put /temp/sample.txt /user/hadoopuser/temp_dir/
+
+# 확인 
+hdfs dfs -ls /user/hadoopuser/temp_dir
+```
 
