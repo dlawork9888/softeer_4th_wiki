@@ -8,6 +8,10 @@ FROM ubuntu:20.04
 RUN apt-get update && apt-get install -y \
     wget curl net-tools vim openssh-server openssh-client sudo rsync && \
     mkdir /var/run/sshd
+    
+# Python 설치
+RUN apt-get update && \
+    DEBIAN_FRONTEND=noninteractive apt-get install -y python3 python3-pip
 
 # JAVA 설치 및 환경변수 설정
 RUN apt-get install -y openjdk-11-jdk
