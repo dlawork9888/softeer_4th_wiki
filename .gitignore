@@ -2,6 +2,12 @@
 w2/sentiment_analysis/webtoon_analysis/webtoon_comments.db
 w2/sentiment_analysis/tweets.csv
 
+w3/average_rating_of_movies_using_mapreduce/ml-20m
+
 *.tar.gz
 
 *.DS_store
+
+*tweets.csv
+
+*ratings.csv

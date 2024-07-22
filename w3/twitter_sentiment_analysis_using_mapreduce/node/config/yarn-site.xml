@@ -1,3 +1,4 @@
+<!--yarn-site.xml-->
 <configuration>
     <property>
         <name>yarn.nodemanager.aux-services</name>

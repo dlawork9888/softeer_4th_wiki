@@ -1,3 +1,5 @@
+<!--mapred-site.xml-->
+
 <configuration>
   <property>
     <name>mapreduce.framework.name</name>

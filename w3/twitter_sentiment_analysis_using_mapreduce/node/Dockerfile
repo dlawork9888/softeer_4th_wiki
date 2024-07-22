@@ -28,7 +28,7 @@ RUN tar -xzvf /temp/hadoop-3.3.6.tar.gz -C /usr/local/ && \
 
 # 하둡 설정 파일 COPY
 # usr/local/hadoop/etc/hadoop
-COPY masternode_config/* /usr/local/hadoop/etc/hadoop/
+COPY config/* /usr/local/hadoop/etc/hadoop/
 
 # 하둡 환경 변수 설정
 ENV HADOOP_HOME=/usr/local/hadoop

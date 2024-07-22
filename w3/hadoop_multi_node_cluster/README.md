@@ -356,7 +356,7 @@ hdfs dfs -put temp/sample.txt tempdir
 hdfs dfs -ls tempdir/
 
 # MapReduce 결과 반환 디렉토리 생성 -> 반환할 폴더가 이미 있으면 안됨.
-# hdfs dfs -mkdir -p tempdir_output
+# hdfs dfs -mkdir tempdir_output
 
 # MapReduce(example 사용)
 hadoop jar $HADOOP_HOME/share/hadoop/mapreduce/hadoop-mapreduce-examples-*.jar wordcount tempdir tempdir_output
