@@ -4,13 +4,13 @@
 for container in $(docker-compose ps -q); do
 
     hostname=$(docker exec $container hostname | tr -d '\r\n')
-    echo "####################"
-    echo "###########$hostname"
-    echo "####################"
+    echo "#########################"
+    echo "#####    $hostname"
+    echo "#########################"
     
     # 파이썬 스크립트를 각 컨테이너에 복사
     docker cp update_config.py $container:/usr/local/hadoop/etc/hadoop/update_config.py
-
+s
     # 복사된 스크립트의 실행 권한 변경
     docker exec -it $container sudo chmod +x /usr/local/hadoop/etc/hadoop/update_config.py
 
