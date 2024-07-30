@@ -14,3 +14,5 @@ docker exec -it spark-master hdfs dfs -ls /
 docker exec -it spark-master hdfs dfs -put /temp /NYC_TLC_data
 # => temp폴더 전체가 올라가서 NYC_TLC_data/temp/개별파일들 <- 요래됐음;;;
 
+# hdfs 파일 업로드 확인
+hdfs dfs -ls /NYC_TLC_data/temp

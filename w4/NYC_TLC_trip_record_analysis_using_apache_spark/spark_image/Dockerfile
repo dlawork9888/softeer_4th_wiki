@@ -72,7 +72,9 @@ RUN sed -i 's/#PasswordAuthentication yes/PasswordAuthentication yes/' /etc/ssh/
 RUN echo "AllowUsers sparkuser" >> /etc/ssh/sshd_config
 
 # 포트 노출
-EXPOSE 22 9870 8088
+EXPOSE 22 9870 8020 9864 50010 50020 50090
+# SSH NamenodeWebUI NamenodeRPC DatanodeWebUI DatanodeRPC DatanodeDataTransfer DatanodeIPC
+
 # 하둡 디렉토리 및 파일의 소유권을 hadoopuser로 변경
 RUN chown -R sparkuser:sparkuser /opt/hadoop
 

@@ -3,6 +3,6 @@
 <configuration>
     <property>
         <name>fs.defaultFS</name>
-        <value>hdfs://spark-master:9009/</value>
+        <value>hdfs://spark-master:9000/</value>
     </property>
 </configuration>

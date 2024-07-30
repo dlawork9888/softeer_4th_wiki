@@ -10,7 +10,7 @@ services:
       - "8080:8080"  # Spark 마스터 UI
       - "7077:7077"  # Spark 마스터 포트
       - "9870:9870"  # Hadoop 네임노드 웹 UI
-      - "9009:9009" # HDFS 네임노드 RPC
+      - "9000:9000" # HDFS 네임노드 RPC
     networks:
       - spark_net
 
